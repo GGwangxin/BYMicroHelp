@@ -1,0 +1,44 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/my/my",
+    "pages/video/video",
+    "pages/zuopin/zuopin",
+    "pages/yule/yule",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#f66666",
+    "navigationBarTitleText": "WeChat",
+    "enablePullDownRefresh": true,
+    "navigationBarTextStyle":"white"
+    },
+  "tabBar": {
+    "color": "#6d7173",
+    "selectedColor": "#f66666",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tab_home.png",
+        "selectedIconPath": "images/tab_home1.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/zuopin/zuopin",
+        "iconPath": "images/tab_bf.png",
+        "selectedIconPath": "images/tab_bf1.png",
+        "text": "作品"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "images/tab_gy.png",
+        "selectedIconPath": "images/tab_gy1.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "debug": true
+}
