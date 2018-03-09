@@ -35,16 +35,16 @@
   header{
     background: @base!important;
   }
-  .mint-actionsheet{
+ #app .mint-actionsheet{
     background: transparent;
   }
-  .mint-actionsheet-listitem, .mint-actionsheet-button {
+ #app .mint-actionsheet-listitem, .mint-actionsheet-button {
     display: block;
     width: 10rem;
     height: 1.5rem;
     line-height:1.5rem;
     font-size: 0.48rem;
-    color: @base;
+    color: @base!important;
     background-color: #fff;
     margin-left: 0.4rem;
     margin-bottom: 0.3rem;
@@ -52,7 +52,7 @@
 
   }
 
-  .mint-loadmore-top {
+ #app .mint-loadmore-top {
     font-size: .38rem;
     color: #999;
   }
