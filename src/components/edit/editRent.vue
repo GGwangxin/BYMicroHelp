@@ -12,8 +12,19 @@
       color: @base;
       margin-right: 0.2rem;
     }
-</style>
+    .cont{
+      width: 100%;
+      padding-top: 0.3rem;
+      background: #f8f8f8;
+    }
 
+</style>
+<style >
+  #editRent .mint-cell:first-child .mint-cell-wrapper {
+
+    background-size:100% 0px!important;
+  }
+</style>
 <template>
     <div id="editRent">
       <header>
@@ -24,13 +35,17 @@
         </a>
       </header>
       <div class="content">
-        <mt-field class="name" label="信息描述" rows="3" placeholder="请输入信息描述" type="textarea" v-model="userName"></mt-field>
-
-        <mt-field class="name" label="联系人" placeholder="请填写联系人姓名" v-model="userName"></mt-field>
-        <mt-field class="phone" label="电话号码" state="success"  placeholder="请填写联系人电话号码" type="tel" v-model="userPhone"></mt-field>
-        <mt-field label="验证码">
-          <span>重新发送</span>
-        </mt-field>
+        <div class="file">
+          <mt-field class="name" label="地址" placeholder="请填写房源详细地址" v-model="userName"></mt-field>
+        </div>
+        <div class="cont"></div>
+        <div class="file">
+          <mt-field class="name" label="户型" placeholder="请填写联系人姓名" v-model="userName"></mt-field>
+          <mt-field class="phone" label="电话号码" state="success"  placeholder="请填写联系人电话号码" type="tel" v-model="userPhone"></mt-field>
+          <mt-field label="验证码">
+            <span>重新发送</span>
+          </mt-field>
+        </div>
       </div>
     </div>
 </template>
