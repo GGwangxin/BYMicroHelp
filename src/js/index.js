@@ -30,6 +30,23 @@ window.wxAnimation=function(option){
     }
     obj.move();
 }
+// url 解析成对象函数
+window.parseQueryString=function(url) {
+  url=url||window.location.href;
+
+  var obj={};
+  var keyvalue=[];
+  var key="",value="";
+  var paraString=url.substring(url.indexOf("?")+1,url.length).split("&");
+  for(var i in paraString)
+  {
+    keyvalue=paraString[i].split("=");
+    key=keyvalue[0];
+    value=keyvalue[1];
+    obj[key]=value;
+  }
+  return obj;
+}
 
 //ajax 请求的公共域名
 window.pubUrl='http://fc.bywb0396.com/Api/'

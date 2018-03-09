@@ -18,7 +18,7 @@
     <div id="editRent">
       <header>
         <a class="mt_left " @click="back()"></a>
-        <a class="mt_center header_name">发布房屋出租信息</a>
+        <a class="mt_center header_name">{{this.title}}</a>
         <a class="mt_right">
 
         </a>
@@ -28,7 +28,7 @@
 
         <mt-field class="name" label="联系人" placeholder="请填写联系人姓名" v-model="userName"></mt-field>
         <mt-field class="phone" label="电话号码" state="success"  placeholder="请填写联系人电话号码" type="tel" v-model="userPhone"></mt-field>
-        <mt-field label="验证码" v-model="captcha">
+        <mt-field label="验证码">
           <span>重新发送</span>
         </mt-field>
       </div>
@@ -41,19 +41,33 @@
     props: {},
     data () {
         return {
+          sell:[
+            '出售',
+            '出租'
+          ],
+          type:[
+            '二手房',
+            '商铺'
+          ],
+          title:'',
           userName:"",
-          userPhone:''
+          userPhone:'',
 
         }
     },
     computed: {},
     components: {},
     watch: {},
-    methods: {},
+    methods: {
+      back(){
+        history.go(-1)
+      }
+    },
     beforeCreate() {},
     mounted() {},
     created(){
-
+        var a=parseQueryString();
+        this.title=this.sell[a.sell-1]+this.type[a.type-1]
     }
 };
 </script>

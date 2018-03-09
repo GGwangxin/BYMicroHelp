@@ -48,12 +48,6 @@
 
 <template>
     <div>
-        <!--<header>-->
-          <!--<a class="mt_left "></a>-->
-          <!--<a class="mt_center header_name">我的</a>-->
-          <!--<a class="mt_right">-->
-          <!--</a>-->
-        <!--</header>-->
         <div class="header_bg" :style="{backgroundImage:'url(./static/img/more.gif)'}">
           <div class="header_img" :style="{backgroundImage:'url(./static/img/more.gif)'}"></div>
           <div class="header_name">王鑫</div>

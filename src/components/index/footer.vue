@@ -123,7 +123,7 @@
         <i class="iconfont icon-iconfontzhizuobiaozhun05"></i>
         <span>首页</span>
       </router-link>
-      <router-link  class="footer_talk" tag="li" to="editRent">
+      <router-link  class="footer_talk" tag="li" to="editIndex">
         <div class="pub_circle "></div>
 
         <i class="iconfont icon-fabu"></i>

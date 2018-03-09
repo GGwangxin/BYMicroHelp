@@ -32,18 +32,43 @@
     display: none !important;
   }
 
-    header{
-      background: @base!important;
-    }
+  header{
+    background: @base!important;
+  }
+  .mint-actionsheet{
+    background: transparent;
+  }
+  .mint-actionsheet-listitem, .mint-actionsheet-button {
+    display: block;
+    width: 10rem;
+    height: 1.5rem;
+    line-height:1.5rem;
+    font-size: 0.48rem;
+    color: @base;
+    background-color: #fff;
+    margin-left: 0.4rem;
+    margin-bottom: 0.3rem;
+    border-radius: 5px;
+
+  }
+
+  .mint-loadmore-top {
+    font-size: .38rem;
+    color: #999;
+  }
 </style>
 <template>
   <div id="app">
     <!--<transition :name="transitionName">-->
-      <router-view v-if="$route.meta.noActive" class="link-view" ></router-view>
+      <router-view v-if="$route.meta.noActive" class="link-view" :style="{'bottom':$route.meta.noActive?'0px':'1.45rem'}"></router-view>
       <keep-alive>
-        <router-view v-if="!$route.meta.noActive"  class="link-view"></router-view>
+        <router-view v-if="!$route.meta.noActive"  class="link-view" :style="{'bottom':$route.meta.noActive?'0px':'1.45rem'}"></router-view>
       </keep-alive>
-      <wx-footer></wx-footer>
+      <wx-footer v-if="$route.meta.footer"></wx-footer>
+      <mt-actionsheet
+        :actions="actions"
+        v-model="sheetVisible">
+      </mt-actionsheet>
     <!--</transition>-->
   </div>
 </template>
@@ -54,6 +79,12 @@
   import wxFooter from './components/index/footer.vue'
   export default {
     name: 'app',
+    data () {
+      return {
+        actions:[],
+        sheetVisible:false
+      }
+    },
     computed:{
       transitionName(){
           return this.$store.state.transitionName
@@ -65,10 +96,19 @@
     components: {
       wxFooter
     },
-    data () {
-      return {
+    methods:{
+      toggleActionsheet(arr){
+        this.actions=arr;
+        this.con
+        this.sheetVisible=true
       }
     },
+    created(){
+      this.$nextTick(()=>{
+        this.$root.eventHub.$on('actionsheet',this.toggleActionsheet)
+
+      })
+    }
   }
 </script>
 

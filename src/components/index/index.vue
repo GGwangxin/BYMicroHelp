@@ -242,10 +242,10 @@
         <div class="index-head" style="overflow: scroll; -webkit-overflow-scrolling: touch;">
           <mt-swipe :auto="10000" prevent  style="height: 100%">
             <mt-swipe-item v-for="(n,i) in banner" :key="i">
-              <img :src="n.imgurl" alt="">
+              <img :src="n.linkimg" alt="">
             </mt-swipe-item>
           </mt-swipe>
-          <searchInput v-model="search" class="search" searchBtn :onSearch="onsearch" :placeholder="'找二手房，租房'"></searchInput>
+          <!--<searchInput v-model="search" class="search" searchBtn :onSearch="onsearch" :placeholder="'找二手房，租房'"></searchInput>-->
         </div>
       </template>
       <div >
@@ -268,34 +268,34 @@
         :topMethod="loadUp"
       >
         <!--显示浏览总量-->
-        <div class="Num">
-          <div class="num_one">
-            <span>浏览量</span>
-            <h1 id="counter">{{yulanNum}}</h1>
-            <b>次</b>
-          </div>
-          <div class="num_one">
-            <span>发布量</span>
-            <h1 id="counter1">11</h1>
-            <b>条</b>
-          </div>
-        </div>
-        <!--文章推荐-->
-        <div class="hotPointParse">
-          <div class="hotPointParseText">
-            最近动态
-          </div>
-          <div class="dividerLine"></div>
-          <div class="articleTitle">
-            <toUpCycle :shuju="listuP"></toUpCycle>
-          </div>
-        </div>
+        <!--<div class="Num">-->
+          <!--<div class="num_one">-->
+            <!--<span>浏览量</span>-->
+            <!--<h1 id="counter">{{yulanNum}}</h1>-->
+            <!--<b>次</b>-->
+          <!--</div>-->
+          <!--<div class="num_one">-->
+            <!--<span>发布量</span>-->
+            <!--<h1 id="counter1">11</h1>-->
+            <!--<b>条</b>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;文章推荐&ndash;&gt;-->
+        <!--<div class="hotPointParse">-->
+          <!--<div class="hotPointParseText">-->
+            <!--最近动态-->
+          <!--</div>-->
+          <!--<div class="dividerLine"></div>-->
+          <!--<div class="articleTitle">-->
+            <!--<toUpCycle :shuju="listuP"></toUpCycle>-->
+          <!--</div>-->
+        <!--</div>-->
 
         <div class="home-section-title flexbox align-item-center">
           <span class="line flexbox-item"></span>
           <h3 class="txt">
             <i class="i_like i_global_new vm"></i>
-            <span class="dib vm">猜你喜欢</span>
+            <span class="dib vm">新房推荐</span>
           </h3>
           <span class="line flexbox-item"></span>
         </div>
@@ -307,10 +307,6 @@
           <wx-spinner></wx-spinner>
         </div>
       </mt-loadmore>
-      <mt-actionsheet
-      :actions="actions"
-      v-model="sheetVisible">
-      </mt-actionsheet>
       <!--<loadMore-->
         <!--ref="loadmore"-->
         <!--:bottom-method="loadBottom"-->
@@ -362,12 +358,9 @@
          ],
          list:[],
          allLoad:false,
-         sheetVisible:false,
          yulanNum:0,
          search:'',
-         actions:[
 
-         ]
        }
     },
     computed: {
@@ -407,7 +400,8 @@
            data:{},
            url:'banner',
            success:(data)=>{
-             this.banner=data
+
+             this.banner=data.data
            },
            error:()=>{
              this.$toast('网络异常');
@@ -415,10 +409,6 @@
            }
          })
        },
-      gofabu(){
-//          window.location.href='http://bywb0396.com/plugin.php?id=xigua_hb&ac=pub&idu=1'
-        this.sheetVisible=true
-      },
       getYulan(){
         ajaxGet({
           data:{},

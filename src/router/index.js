@@ -12,6 +12,7 @@ import mapPosition from '@/components/house/mapPosition'
 //发布
 //出租
 import editRent from '@/components/edit/editRent'
+import editIndex from '@/components/edit/editIndex'
 
 
 //个人中心
@@ -30,6 +31,9 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index,
+      meta: {
+        footer: true // 不需要缓存
+      },
     },
     {
       path:'/houseList',
@@ -55,6 +59,16 @@ export default new Router({
         noActive: true // 不需要缓存
       },
     },
+
+    //发布模块
+    {
+      path:'/editIndex',
+      name:'editIndex',
+      component:editIndex,
+      meta: {
+        footer: true // 不需要缓存
+      },
+    },
     {
       path:'/editRent',
       name:'editRent',
@@ -75,7 +89,16 @@ export default new Router({
       path:'/myCenter',
       name:'myCenter',
       component:myCenter,
+      meta: {
+        footer: true // 不需要缓存
+      },
     },
-    { path: '*', component: index}
+    {
+      path: '*',
+      component: index,
+      meta: {
+        footer: true // 不需要缓存
+      },
+    }
   ]
 })
