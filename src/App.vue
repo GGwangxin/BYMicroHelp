@@ -35,27 +35,27 @@
   header{
     background: @base!important;
   }
- #app .mint-actionsheet{
-    background: transparent;
-  }
- #app .mint-actionsheet-listitem, .mint-actionsheet-button {
-    display: block;
-    width: 10rem;
-    height: 1.5rem;
-    line-height:1.5rem;
-    font-size: 0.48rem;
-    color: @base!important;
-    background-color: #fff;
-    margin-left: 0.4rem;
-    margin-bottom: 0.3rem;
-    border-radius: 5px;
+   #app .mint-actionsheet{
+      background: transparent;
+    }
+   #app .mint-actionsheet-listitem, .mint-actionsheet-button {
+      display: block;
+      width: 10rem!important;
+      height: 1.5rem;
+      line-height:1.5rem;
+      font-size: 0.48rem;
+      color: @base!important;
+      background-color: #fff;
+      margin-left: 0.4rem;
+      margin-bottom: 0.3rem;
+      border-radius: 5px;
 
-  }
+    }
 
- #app .mint-loadmore-top {
-    font-size: .38rem;
-    color: #999;
-  }
+   #app .mint-loadmore-top {
+      font-size: .38rem;
+      color: #999;
+    }
 </style>
 <template>
   <div id="app">

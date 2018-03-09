@@ -74,7 +74,7 @@
           <i></i>
           商铺
         </li>
-        <li class="houseNew" @click="noFinish">
+        <li class="houseNew" @click="tolouxun">
           <i class="iconfont icon-xinwenzixun1"></i>
           楼讯
         </li>
@@ -123,6 +123,9 @@
             window.location.href='http://bywb0396.com/plugin.php?id=xigua_hb&ac=cat&cat_id=19&city=&dist=&orderby=&idu=2'
 
           }
+      },
+      tolouxun(){
+        this.$router.push('/louxunList')
       },
       noFinish(){
         this.$toast('正在努力开发中~~')

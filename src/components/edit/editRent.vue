@@ -59,14 +59,14 @@
     components: {},
     watch: {},
     methods: {
-      back(){
+      back(e){
         history.go(-1)
       }
     },
     beforeCreate() {},
     mounted() {},
     created(){
-        var a=parseQueryString();
+        var a=parseQueryString(window.location.hash);
         this.title=this.sell[a.sell-1]+this.type[a.type-1]
     }
 };
