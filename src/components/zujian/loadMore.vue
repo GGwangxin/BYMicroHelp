@@ -80,6 +80,9 @@
         },500)
         this.endDistance=this.$refs.loadMore.getBoundingClientRect().height-this.$refs.loadMoreContent.getBoundingClientRect().height
       },
+      refresh(){
+        this.playList.refresh();
+      },
       scrollEvent(){
         this.playList.on('scrollStart', ()=> {
             console.log(this.playList)
@@ -90,6 +93,12 @@
 //            if(pos.y<=this.endDistance&&!this.bottomAllLoaded){
 //            }
 //            this.playList.moved=false
+            console.log(this.playList.directionY)
+            console.log(this.playList.maxScrollY)
+            if(this.playList.directionY >=0  && pos.y < this.playList.maxScrollY+10){
+              this.$emit('loadDown')
+                console.log('down*******************************')
+            }
             if(!this.isLoadingBottom&&pos.y-this.rangeDistance<=this.endDistance){
               if(new Date().getTime()-this.startScrollTime>400){
 //                  $('body').addClass('iscroll')

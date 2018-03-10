@@ -20,7 +20,8 @@ import myCenter from '@/components/myCenter/myCenter'
 
 //楼讯
 import louxunList from '@/components/louxun/louxunList'
-
+//
+import articleDetail from '@/components/louxun/articleDetail'
 Vue.use(Router)
 
 
@@ -81,6 +82,13 @@ export default new Router({
       path:'/louxunList',
       name:'louxunList',
       component:louxunList,
+      meta: {
+        noActive: true // 不需要缓存
+      },
+    },{
+      path:'/articleDetail/:id',
+      name:'articleDetail',
+      component:articleDetail,
       meta: {
         noActive: true // 不需要缓存
       },
