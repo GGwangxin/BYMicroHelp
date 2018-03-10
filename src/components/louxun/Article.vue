@@ -5,11 +5,11 @@
            <p class="title">{{val.title}}</p>
            <p class="content" v-if='!val.img'>{{val.content}}</p>
            <p class="bottomMsg" >
-             <img v-lazy="val.header"><span>{{val.publisher}} · {{val.number}}次阅读</span>
+             <img src='./timg.jpg'><span>管理员 · {{val.islink}}次阅读</span>
            </p>
           </div>
          <div class="pic" v-if='val.img'>
-           <img v-lazy="val.img">
+           <img v-lazy="val.imgurl">
          </div>
        </div>
     </div>
@@ -35,23 +35,11 @@
     watch: {},
     methods: {
       clickItem(id){
-        ajaxGet({
-          data:{
-            id
-          },
-          url:'cmslist/',
-          success:(data)=>{
-            this.list=data;
-          },
-          error:()=>{
-            this.$toast('网络异常');
-
-          }
+        this.$router.push({
+          path:'/articleDetail/'+id
         })
       }
     },
-    beforeCreate() {},
-    mounted() {},
     created(){
 
     }

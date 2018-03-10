@@ -12,6 +12,7 @@
         :bottom-method="loadBottom"
         :bottom-all-loaded="allLoad"
         :topMethod = 'loadUp'
+        @loadDown='loadDown'
         @freshList = 'freshList'
         style="position: absolute;top: 0.5rem;bottom: 0;width: 100%"
       >
@@ -124,24 +125,74 @@
               }
             ],
             allLoad:false,
+            isCanLoad:true
         }
     },
     computed: {},
     components: {
       loadMore,noContent,articleList
     },
-    watch: {},
+    watch: {
+      loadMore(){
+        setTimeout(() => {
+          this.$refs.loadMore.refresh()
+        }, 20);
+      }
+    },
     methods: {
       loadUp(){
           console.log('-----')
       },
-      freshList(){
-        console.log(this.list.length)
+      loadDown(){
+        if(!this.isCanLoad){
+          return;
+        }
+        this.isCanLoad = false;
+        ajaxGet({
+          data:{
+            page:parseInt(this.list.length/4),
+            page_size:4
+          },
+          url:'zixunlist/',
+          success:(data)=>{
+            setTimeout(() => {
+              this.isCanLoad = true;
+            }, 1000);
+            
+            if(data.code === 0){
+              this.list =this.list.concat(data.data) ;
+            }
+          },
+          error:()=>{
+            this.isCanLoad = true;
+            this.$toast('网络异常');
+          }
+        })
       },
+      freshList(){
+        ajaxGet({
+              data:{
+                page:1,
+                page_size:4
+              },
+              url:'zixunlist/',
+              success:(data)=>{
+                console.log(data)
+                if(data.code === 0){
+                  this.list = data.data;
+                }
+              },
+              error:()=>{
+                this.$toast('网络异常');
+
+          }
+        })
+      },
+
       loadBottom(){
         this.$nextTick(()=>{
           this.$refs.loadmore.onBottomLoaded()
-          this.allLoad=true
+          this.allLoad=true;
         })
       },
       back(){
@@ -151,7 +202,7 @@
     beforeCreate() {},
     mounted() {},
     created(){
-
+      //this.freshList();
     }
 };
 </script>
