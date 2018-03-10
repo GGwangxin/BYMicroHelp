@@ -97,8 +97,17 @@
                   this.doLoadBottom();
                 }
             }
-
         });
+        /***
+         * @description  bscoller 添加上拉到50px时 触发
+         * @augments pos [Object] {x:x,y:y}
+         * @returns 暴露父组件freshList方法
+         * */
+        this.playList.on('touchEnd',pos=>{
+          if(pos.y > 50){
+            this.$emit('freshList')
+          }
+        })
       },
       doLoadBottom(){
         if (typeof this.bottomMethod === 'function') {
