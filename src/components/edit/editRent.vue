@@ -26,6 +26,9 @@
     background-color: @base;
     border-color: @base;
   }
+  #editRent .mint-radiolist .mint-cell-wrapper{
+    background-size: 120% 0px;
+  }
 </style>
 <style scoped lang="less">
     #editRent .content{
@@ -99,17 +102,17 @@
       </header>
       <div class="content">
         <div class="file">
-          <mt-field class="address" label="地址" placeholder="请填写房源详细地址" v-model="userName"></mt-field>
+          <mt-field class="address" label="地址" placeholder="请填写房源详细地址" v-model="shuju.address"></mt-field>
         </div>
         <div class="cont"></div>
         <div class="file">
           <mt-field class="huxing"  @click.native="selectAddress(1,$event)" state="select" label="户型"   placeholder="请选择您的户型"  v-model="huxingstring"></mt-field>
-          <mt-field class="mianji" label="面积" state="mianji"  placeholder="请输入您的房屋面积" type="number" v-model="userPhone"></mt-field>
+          <mt-field class="mianji" label="面积" state="mianji"  placeholder="请输入您的房屋面积" type="number" v-model="shuju.mianji"></mt-field>
           <mt-field class="huxing"  @click.native="selectAddress(2,$event)" state="select" label="楼层"   placeholder="请选择您的楼层"  v-model="flooerstring"></mt-field>
           <mt-field class="huxing"  @click.native="selectAddress(3,$event)" state="select" label="装修"   placeholder="请选择房屋装修"  v-model="zhuangxiustring"></mt-field>
         </div>
         <div class="cont"></div>
-        <mt-field class="mianji" label="称呼"  placeholder="请输入称呼,如：李先生" type="number" v-model="userPhone"></mt-field>
+        <mt-field class="mianji" label="称呼"  placeholder="请输入称呼,如：李先生" v-model="shuju.userName"></mt-field>
         <div class="cont"></div>
         <div class="title">
           选填项
@@ -117,7 +120,7 @@
 
         <mt-cell title="是否有证件">
           <mt-radio
-            v-model="hasCord"
+            v-model="shuju.hasCord"
             :options="hasCordArray">
           </mt-radio>
         </mt-cell>
@@ -126,16 +129,16 @@
           enter-active-class="animated zoomIn"
           leave-active-class="animated zoomOut"
         >
-          <mt-cell title="多选" v-show="hasCord==1">
+          <mt-cell title="多选" v-show="shuju.hasCord==1">
             <mt-checklist
-              v-model="cardType"
+              v-model="shuju.cardType"
               :options="cardTypeArray">
             </mt-checklist>
           </mt-cell>
         </transition>
 
-        <up-image v-model="imgList" style="background: #fff"></up-image>
-        <mt-button class="submit" type="primary">立即发布</mt-button>
+        <up-image v-model="shuju.imgList" style="background: #fff"></up-image>
+        <mt-button class="submit" type="primary" @click="submit" :class="{active:canSend}">立即发布</mt-button>
       </div>
       <mt-popup v-model="popupVisible" position="bottom" class="mint-popup-4">
         <div class="picker-toolbar">
@@ -162,8 +165,18 @@
             '二手房',
             '商铺'
           ],
+          shuju:{
+            address:'',
+            huxing:[],
+            mianji:'',
+            flooer:[],
+            zhuangxiu:[],
+            userName:"",
+            hasCord:'',
+            cardType:[],
+            imgList:[]
+          },
           title:'',
-          userName:"",
           userPhone:'',
           popupVisible:false,
           maxlen:15,
@@ -212,7 +225,6 @@
           zhuangxiustring:'',
           imgList:[],
           //   是否有证件
-          hasCord:'',
           hasCordArray:[
             {
               label:'有',
@@ -223,7 +235,6 @@
               value:'2'
             }
           ],
-          cardType:[],
           cardTypeArray:[
             {
               label:'房屋产权证',
@@ -245,7 +256,18 @@
         }
     },
     computed: {
-
+      canSend(){
+        var a=false;
+        if(this.shuju.address
+          &&this.shuju.huxing.length>0
+          &&this.shuju.mianji>-1
+          &&this.shuju.userName
+          &&this.shuju.flooer.length>0
+          &&this.shuju.zhuangxiu.length>0){
+          a=true
+        }
+        return a
+      }
     },
     components: {upImage},
     watch: {},
@@ -259,18 +281,18 @@
         if(n==1){
             this.popupList=this.huxingSlots
             this.$nextTick(()=>{
-              this.huxing.length&&this.picker.setValues(this.huxing)
+              this.shuju.huxing.length&&this.picker.setValues(this.shuju.huxing)
 
             })
           }else if(n==2){
             this.popupList=this.flooerSlots
             this.$nextTick(()=>{
-              this.flooer.length&&this.picker.setValues(this.flooer)
+              this.shuju.flooer.length&&this.picker.setValues(this.shuju.flooer)
             })
           }else{
             this.popupList=this.zhuangxiuSlots
             this.$nextTick(()=>{
-              this.zhuangxiu.length&&this.picker.setValues(this.zhuangxiu)
+              this.shuju.zhuangxiu.length&&this.picker.setValues(this.shuju.zhuangxiu)
 
             })
           }
@@ -285,14 +307,14 @@
         this.popupVisible=false
         console.log()
         if(this.popupIndex==1){
-          this.huxing=this.popupArray.length>0?this.popupArray:['一室','一厅','一卫']
-          this.huxingstring=this.ArrToString(this.huxing)
+          this.shuju.huxing=this.popupArray.length>0?this.popupArray:['一室','一厅','一卫']
+          this.huxingstring=this.ArrToString(this.shuju.huxing)
         }else if(this.popupIndex==2){
-          this.flooer=this.popupArray.length>0?this.popupArray:['一层']
-          this.flooerstring=this.ArrToString(this.flooer)
+          this.shuju.flooer=this.popupArray.length>0?this.popupArray:['一层']
+          this.flooerstring=this.ArrToString(this.shuju.flooer)
         }else{
-          this.zhuangxiu=this.popupArray.length>0?this.popupArray:['毛坯']
-          this.zhuangxiustring=this.ArrToString(this.zhuangxiu)
+          this.shuju.zhuangxiu=this.popupArray.length>0?this.popupArray:['毛坯']
+          this.zhuangxiustring=this.ArrToString(this.shuju.zhuangxiu)
 
         }
       },
@@ -315,6 +337,11 @@
           str+=n
         })
         return str
+      },
+      submit(){
+        this.shuju.phone=15638181363
+        this.shuju.type='二手房出售 或者改成1234 id代替'
+        console.log(JSON.stringify(this.shuju))
       }
     },
     beforeCreate() {},

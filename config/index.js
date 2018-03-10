@@ -52,7 +52,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     // assetsPublicPath: '/',
     assetsPublicPath: 'http://bywb0396.com/byfc/',
-    // assetsPublicPath: 'http://192.168.1.136:8020/q/',
+    // assetsPublicPath: 'http://fc.bywb0396.com/byfc',
 
     /**
      * Source Maps
