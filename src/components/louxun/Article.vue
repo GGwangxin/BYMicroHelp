@@ -5,11 +5,11 @@
            <p class="title">{{val.title}}</p>
            <p class="content" v-if='!val.img'>{{val.content}}</p>
            <p class="bottomMsg" >
-             <img :src="val.header"><span>{{val.publisher}}.{{val.number}}次阅读</span>
+             <img v-lazy="val.header"><span>{{val.publisher}} · {{val.number}}次阅读</span>
            </p>
           </div>
          <div class="pic" v-if='val.img'>
-           <img :src="val.img">
+           <img v-lazy="val.img">
          </div>
        </div>
     </div>
