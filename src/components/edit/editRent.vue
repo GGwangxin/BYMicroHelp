@@ -276,8 +276,9 @@
         history.go(-1)
       },
       selectAddress(n, e){
-          e.target.tagName=='INPUT'&&e.target.blur();
+        console.log(n)
 
+        e.target.tagName=='INPUT'&&e.target.blur();
         if(n==1){
             this.popupList=this.huxingSlots
             this.$nextTick(()=>{

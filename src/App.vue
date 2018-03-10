@@ -99,7 +99,6 @@
     methods:{
       toggleActionsheet(arr){
         this.actions=arr;
-        this.con
         this.sheetVisible=true
       }
     },
@@ -108,18 +107,8 @@
         this.$root.eventHub.$on('actionsheet',this.toggleActionsheet)
 
       })
-      alert(window.location.href)
-      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx282641693a5af1b0&redirect_uri=http://fc.bywb0396.com/byfc/&response_type=code&scope=snsapi_userinfo&state=http://fc.bywb0396.com/byfc/&connect_redirect=1#wechat_redirect"
-      ajaxGet({
-        url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx282641693a5af1b0&redirect_uri=http://fc.bywb0396.com/api/wxlogin/&response_type=code&scope=snsapi_userinfo&state=http://fc.bywb0396.com/byfc/&connect_redirect=1#wechat_redirect',
-        success:(data)=>{
-          console.log(data)
-          this.$toast('成功');
-        },
-        error:()=>{
-          this.$toast('网络异常');
-        }
-      })
+//      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx282641693a5af1b0&redirect_uri=http://fc.bywb0396.com/byfc/&response_type=code&scope=snsapi_userinfo&state=http://fc.bywb0396.com/byfc/&connect_redirect=1#wechat_redirect"
+
     }
   }
 </script>

@@ -48,9 +48,9 @@
 
 <template>
     <div>
-        <div class="header_bg" :style="{backgroundImage:'url(./static/img/more.gif)'}">
-          <div class="header_img" :style="{backgroundImage:'url(./static/img/more.gif)'}"></div>
-          <div class="header_name">王鑫</div>
+        <div class="header_bg" :style="{backgroundImage:'url('+login.headimgurl+')'}">
+          <div class="header_img" :style="{backgroundImage:'url('+login.headimgurl+')'}"></div>
+          <div class="header_name">{{login.nickname}}</div>
           <canvasLine ></canvasLine>
         </div>
       <mt-cell title="房屋出租" to="editRent" value="" class="send_rent"></mt-cell>
@@ -69,7 +69,11 @@
 
         }
     },
-    computed: {},
+    computed: {
+        login(){
+          return this.$store.state.login
+        }
+    },
     components: {
       canvasLine
     },

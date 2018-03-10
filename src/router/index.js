@@ -17,11 +17,16 @@ import editIndex from '@/components/edit/editIndex'
 
 //个人中心
 import myCenter from '@/components/myCenter/myCenter'
+import bind from '@/components/myCenter/bind'
 
 //楼讯
 import louxunList from '@/components/louxun/louxunList'
 //
 import articleDetail from '@/components/louxun/articleDetail'
+
+//微信授权登录
+import login from '@/components/index/login'
+
 Vue.use(Router)
 
 
@@ -99,6 +104,22 @@ export default new Router({
       component:myCenter,
       meta: {
         footer: true // 不需要缓存
+      },
+    },
+    {
+      path:'/login',
+      name:'login',
+      component:login,
+      meta: {
+        noActive: true // 不需要缓存
+      },
+    },
+    {
+      path:'/bind',
+      name:'bind',
+      component:bind,
+      meta: {
+        noActive: true // 不需要缓存
       },
     },
     {
