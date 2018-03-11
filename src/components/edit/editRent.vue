@@ -27,7 +27,10 @@
     border-color: @base;
   }
   #editRent .mint-radiolist .mint-cell-wrapper{
-    background-size: 120% 0px;
+    background-size: 120% 0px!important;
+  }
+  #editRent .mint-radiolist .mint-cell:last-child{
+    background-size: 120% 0px!important;
   }
 </style>
 <style scoped lang="less">
@@ -102,18 +105,18 @@
       </header>
       <div class="content">
         <div class="file">
-          <mt-field class="address" label="地址" placeholder="请填写房源详细地址" v-model="shuju.address"></mt-field>
+          <mt-field class="address" ref="address" label="地址" placeholder="请填写房源详细地址" v-model="shuju.address"></mt-field>
         </div>
         <div class="cont"></div>
         <div class="file">
-          <mt-field class="huxing"  @click.native="selectAddress(1,$event)" state="select" label="户型"   placeholder="请选择您的户型"  v-model="huxingstring"></mt-field>
-          <mt-field class="mianji" label="面积" state="mianji"  placeholder="请输入您的房屋面积" type="number" v-model="shuju.mianji"></mt-field>
-          <mt-field class="mianji" label="价格" state="mianji"  placeholder="请输入价格" type="number" v-model="shuju.price"></mt-field>
-          <mt-field class="huxing"  @click.native="selectAddress(2,$event)" state="select" label="楼层"   placeholder="请选择您的楼层"  v-model="flooerstring"></mt-field>
-          <mt-field class="huxing"  @click.native="selectAddress(3,$event)" state="select" label="装修"   placeholder="请选择房屋装修"  v-model="zhuangxiustring"></mt-field>
+          <mt-field class="huxing" ref="huxing"  @click.native="selectAddress(1,$event)" state="select" label="户型"   placeholder="请选择您的户型"  v-model="huxingstring"></mt-field>
+          <mt-field class="mianji" ref="mianji" label="面积" state="mianji"  placeholder="请输入您的房屋面积" type="number" v-model="shuju.mianji"></mt-field>
+          <mt-field class="price"  ref="price" label="价格"   placeholder="请输入价格,如5000/年"  v-model="shuju.price"></mt-field>
+          <mt-field class="flooer" ref="flooer" @click.native="selectAddress(2,$event)" state="select" label="楼层"   placeholder="请选择您的楼层"  v-model="flooerstring"></mt-field>
+          <mt-field class="zhuangxiu" ref="zhuangxiu"  @click.native="selectAddress(3,$event)" state="select" label="装修"   placeholder="请选择房屋装修"  v-model="zhuangxiustring"></mt-field>
         </div>
         <div class="cont"></div>
-        <mt-field class="mianji" label="称呼"  placeholder="请输入称呼,如：李先生" v-model="shuju.userName"></mt-field>
+        <mt-field class="userName"  ref="userName" label="称呼"  placeholder="请输入称呼,如：李先生" v-model="shuju.username"></mt-field>
         <div class="cont"></div>
         <div class="title">
           选填项
@@ -121,7 +124,7 @@
 
         <mt-cell title="是否有证件">
           <mt-radio
-            v-model="shuju.hasCord"
+            v-model="shuju.hascord"
             :options="hasCordArray">
           </mt-radio>
         </mt-cell>
@@ -130,15 +133,15 @@
           enter-active-class="animated zoomIn"
           leave-active-class="animated zoomOut"
         >
-          <mt-cell title="多选" v-show="shuju.hasCord==1">
+          <mt-cell title="多选" v-show="shuju.hascord==1">
             <mt-checklist
-              v-model="shuju.cardType"
+              v-model="shuju.cardtype"
               :options="cardTypeArray">
             </mt-checklist>
           </mt-cell>
         </transition>
 
-        <up-image v-model="shuju.imgList" style="background: #fff"></up-image>
+        <up-image v-model="shuju.imglist" style="background: #fff"></up-image>
         <mt-button class="submit" type="primary" @click="submit" :class="{active:canSend}">立即发布</mt-button>
       </div>
       <mt-popup v-model="popupVisible" position="bottom" class="mint-popup-4">
@@ -173,10 +176,10 @@
             price:'',
             flooer:[],
             zhuangxiu:[],
-            userName:"",
-            hasCord:'',
-            cardType:[],
-            imgList:{
+            username:"",
+            hascord:'',
+            cardtype:[],
+            imglist:{
               images:[]
             }
           },
@@ -265,12 +268,18 @@
         if(this.shuju.address
           &&this.shuju.huxing.length>0
           &&this.shuju.mianji>-1
-          &&this.shuju.userName
+          &&this.shuju.username
           &&this.shuju.flooer.length>0
           &&this.shuju.zhuangxiu.length>0){
           a=true
         }
         return a
+      },
+      login(){
+          return this.$store.state.login;
+      },
+      iphone(){
+          return this.$store.state.userPhone
       }
     },
     components: {upImage},
@@ -280,9 +289,8 @@
         history.go(-1)
       },
       selectAddress(n, e){
-        console.log(n)
 
-        e.target.tagName=='INPUT'&&e.target.blur();
+        (e&&e.target.tagName=='INPUT')&&e.target.blur();
         if(n==1){
             this.popupList=this.huxingSlots
             this.$nextTick(()=>{
@@ -310,7 +318,6 @@
       },
       sureaddress(){
         this.popupVisible=false
-        console.log()
         if(this.popupIndex==1){
           this.shuju.huxing=this.popupArray.length>0?this.popupArray:['一室','一厅','一卫']
           this.huxingstring=this.ArrToString(this.shuju.huxing)
@@ -343,17 +350,80 @@
         })
         return str
       },
+      getInput(a){
+
+      },
       submit(){
-        this.shuju.phone=15638181363
-        this.shuju.type='二手房出售 或者改成1234 id代替'
-        console.log(JSON.stringify(this.shuju))
+        if(!this.shuju.address){
+            this.$toast('请填写房源地址');
+            this.$refs.address.$refs.input.focus()
+            return
+        }
+        if(this.shuju.huxing.length==0){
+          this.$toast('请选择户型');
+          this.$refs.huxing.$refs.input.focus()
+          this.selectAddress(1)
+          return
+        }
+        if(!this.shuju.mianji){
+          this.$toast('请填写房屋面积');
+          this.$refs.mianji.$refs.input.focus()
+          return
+        }
+        if(!this.shuju.price){
+          this.$toast('请填写价格');
+          this.$refs.price.$refs.input.focus()
+          return
+        }
+        if(this.shuju.flooer.length==0){
+          this.$toast('请选择楼层');
+          this.$refs.flooer.$refs.input.focus()
+          this.selectAddress(2)
+          return
+        }
+        if(this.shuju.zhuangxiu.length==0){
+          this.$toast('请选择装修方式');
+          this.$refs.zhuangxiu.$refs.input.focus()
+          this.selectAddress(3)
+          return
+        }
+        if(!this.shuju.username){
+          this.$toast('请填写称呼');
+          this.$refs.userName.$refs.input.focus()
+          return
+        }
+        //选填的两项
+        if(this.shuju.hascord!=1){
+          this.shuju.codearr=[0]
+        }else{
+          this.shuju.codearr=this.shuju.cardtype
+        }
+        this.shuju.iphone=this.iphone;
+        this.shuju.openid=this.login.openid;
+        var a=this.title;
+        this.shuju.lxtype=a=='二手房出售'?1:a=='二手房出租'?2:'商铺出售'?3:4;
+        ajaxPost({
+          url:'uptext/',
+          data:this.shuju,
+          success:(data)=>{
+            if(data.msg=='success'){
+              this.$toast('发布成功')
+              this.$router.push('/myCenter')
+            }else{
+              this.$toast(data.msg)
+            }
+          },
+          error:()=>{
+            this.$toast('网络异常')
+          }
+        })
       }
     },
     beforeCreate() {},
     mounted() {},
     created(){
         var a=parseQueryString(window.location.hash);
-        this.title=this.sell[a.sell-1]+this.type[a.type-1]
+        this.title=this.type[a.type-1]+this.sell[a.sell-1]
     }
 };
 </script>
