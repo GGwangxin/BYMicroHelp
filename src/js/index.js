@@ -50,6 +50,7 @@ window.parseQueryString=function(url) {
 
 //ajax 请求的公共域名
 window.pubUrl='http://fc.bywb0396.com/Api/'
+window.commonUrl='http://fc.bywb0396.com/'
 
 //这个用来获取数据
 window.ajaxGet=function(a){
@@ -75,7 +76,7 @@ window.ajaxGet=function(a){
 
 window.ajaxPost=function(a){
   $.ajax({
-    url: a.url,
+    url: (a.url.indexOf('http')!=-1)?a.url:pubUrl+a.url,
     data: a.data,
     type: "post",
     // headers: {

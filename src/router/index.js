@@ -27,6 +27,9 @@ import articleDetail from '@/components/louxun/articleDetail'
 //微信授权登录
 import login from '@/components/index/login'
 
+//二手房
+import secondHouseList from  '@/components/secondHouse/secondHouseList'
+
 Vue.use(Router)
 
 
@@ -118,6 +121,14 @@ export default new Router({
       path:'/bind',
       name:'bind',
       component:bind,
+      meta: {
+        noActive: true // 不需要缓存
+      },
+    },
+    {
+      path:'/secondHouseList',
+      name:'secondHouseList',
+      component:secondHouseList,
       meta: {
         noActive: true // 不需要缓存
       },

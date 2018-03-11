@@ -29,7 +29,7 @@
     margin: auto;
   }
   .guidanceTosearch {
-    display: none !important;
+    /*display: none !important;*/
   }
 
   header{

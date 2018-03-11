@@ -117,11 +117,9 @@
           }else if(n==3){
             this.$router.push('/louxunList')
           }else if(n==158){
-            window.location.href='http://bywb0396.com/plugin.php?id=xigua_hb&ac=cat&cat_id=23&city=&dist=&orderby=&idu=2'
-
+            this.$router.push('/secondHouseList?type=1')
           }else{
-            window.location.href='http://bywb0396.com/plugin.php?id=xigua_hb&ac=cat&cat_id=19&city=&dist=&orderby=&idu=2'
-
+            this.$router.push('/secondHouseList?type=2')
           }
       },
       tolouxun(){

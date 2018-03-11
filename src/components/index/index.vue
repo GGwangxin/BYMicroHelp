@@ -103,7 +103,7 @@
       background-position: -13px 0;
     }
     .i_global_new {
-      background: url(img/newicon5.png) no-repeat;
+      background: url('./../../../static/img/newicon5.png') no-repeat;
       -webkit-background-size: 342px 40px;
       background-size: 342px 40px;
     }

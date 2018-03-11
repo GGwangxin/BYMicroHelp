@@ -86,11 +86,12 @@
         },
         data(){
             return {
-                list:{
-                  images:[]
-                },
+              list:{
+                images:[]
+              },
               canvasWidth:0,
               canvasheight:0,
+              positionPole:'大泌阳房产',
               sheetVisible:false,
               actions:[
 
@@ -184,7 +185,6 @@
             img.src = file;
             this.$indicator.open();
             img.onload=()=>{
-//              Indicator.close();
               this.trans(img)
             }
           },
@@ -209,27 +209,25 @@
               var quality = 0.8; //image quality
               ctx.drawImage(img,0,0,this.canvasWidth,this.canvasheight);
               // 绘制水印
-//              ctx.font="22px SimSun";
-//              ctx.fillStyle = "rgba(255,255,255,1)";
-//              ctx.fillText(now,(this.canvasWidth-ctx.measureText(now).width)/2,50);
-//              ctx.fillText(this.positionPole,(this.canvasWidth-ctx.measureText(this.positionPole).width)/2,100);
+              ctx.font="22px SimSun";
+              ctx.fillStyle = "rgba(255,255,255,1)";
+              ctx.fillText(this.positionPole,(this.canvasWidth-ctx.measureText(this.positionPole).width-10),this.canvasheight-50);
 
               var data=canvas.toDataURL("image/jpeg",quality);
               ajaxPost({
-                url:'http://'+window.localStorage.getItem('eduds')+'/'+'Jytssmweb/jyt/uploadfile/uploadImg',
-                data: JSON.stringify({
-                  imgStr:data,
-                  zone :window.localStorage.getItem('dishi')
-                }),
+                url:'base64_upload/',
+                data: {
+                  base64:data,
+                },
                 success: (data) => {
-                  this.list.images.push({
-                    w:this.canvasWidth,
-                    h:this.canvasheight,
-                    imageUrl:data.data,
-                    toimageUrl:'',
-                    tofilename:'',
-                    src:'http://'+window.localStorage.getItem('eduds')+'/'+'downloads/'+data.data
-                  })
+                  console.log(this)
+                  if(data.msg=='success'){
+                    this.list.images.push({
+                      w:this.canvasWidth,
+                      h:this.canvasheight,
+                      src:window.commonUrl+data.data
+                    })
+                  }
                   this.$refs.upImage.value=null;
                   this.$refs.paizhao.value=null;
                   this.changeImage();

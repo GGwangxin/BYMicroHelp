@@ -108,6 +108,7 @@
         <div class="file">
           <mt-field class="huxing"  @click.native="selectAddress(1,$event)" state="select" label="户型"   placeholder="请选择您的户型"  v-model="huxingstring"></mt-field>
           <mt-field class="mianji" label="面积" state="mianji"  placeholder="请输入您的房屋面积" type="number" v-model="shuju.mianji"></mt-field>
+          <mt-field class="mianji" label="价格" state="mianji"  placeholder="请输入价格" type="number" v-model="shuju.price"></mt-field>
           <mt-field class="huxing"  @click.native="selectAddress(2,$event)" state="select" label="楼层"   placeholder="请选择您的楼层"  v-model="flooerstring"></mt-field>
           <mt-field class="huxing"  @click.native="selectAddress(3,$event)" state="select" label="装修"   placeholder="请选择房屋装修"  v-model="zhuangxiustring"></mt-field>
         </div>
@@ -169,12 +170,15 @@
             address:'',
             huxing:[],
             mianji:'',
+            price:'',
             flooer:[],
             zhuangxiu:[],
             userName:"",
             hasCord:'',
             cardType:[],
-            imgList:[]
+            imgList:{
+              images:[]
+            }
           },
           title:'',
           userPhone:'',

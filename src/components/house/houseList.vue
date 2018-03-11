@@ -41,6 +41,7 @@
           tid:0,
           allLoad:false,
           list:[],
+          page:1,
           index:0,
           typeList:[
             '新房',
@@ -66,7 +67,7 @@
       loadBottom(){
         ajaxGet({
           data:{
-            page:1,
+            page:this.page,
             page_size:8,
             pid:this.tid
 
@@ -76,8 +77,13 @@
             this.list=data;
             this.$nextTick(()=>{
               this.$refs.loadmore.onBottomLoaded()
-              this.allLoad=true
+              if(data.length<8){
+                this.allLoad=true
+              }else{
+                this.allLoad=false
+              }
             })
+            this.page++;
           },
           error:()=>{
             this.$toast('网络异常');

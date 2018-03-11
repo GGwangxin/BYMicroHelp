@@ -80,12 +80,9 @@
         },500)
         this.endDistance=this.$refs.loadMore.getBoundingClientRect().height-this.$refs.loadMoreContent.getBoundingClientRect().height
       },
-      refresh(){
-        this.playList.refresh();
-      },
       scrollEvent(){
         this.playList.on('scrollStart', ()=> {
-            console.log(this.playList)
+//            console.log(this.playList)
             this.startScrollTime=new Date().getTime()
         })
         this.playList.on('scroll', (pos)=>{
@@ -93,12 +90,6 @@
 //            if(pos.y<=this.endDistance&&!this.bottomAllLoaded){
 //            }
 //            this.playList.moved=false
-            console.log(this.playList.directionY)
-            console.log(this.playList.maxScrollY)
-            if(this.playList.directionY >=0  && pos.y < this.playList.maxScrollY+10){
-              this.$emit('loadDown')
-                console.log('down*******************************')
-            }
             if(!this.isLoadingBottom&&pos.y-this.rangeDistance<=this.endDistance){
               if(new Date().getTime()-this.startScrollTime>400){
 //                  $('body').addClass('iscroll')
@@ -106,17 +97,8 @@
                   this.doLoadBottom();
                 }
             }
+
         });
-        /***
-         * @description  bscoller 添加上拉到50px时 触发
-         * @augments pos [Object] {x:x,y:y}
-         * @returns 暴露父组件freshList方法
-         * */
-        this.playList.on('touchEnd',pos=>{
-          if(pos.y > 50){
-            this.$emit('freshList')
-          }
-        })
       },
       doLoadBottom(){
         if (typeof this.bottomMethod === 'function') {

@@ -28,9 +28,11 @@
                   },
                   success:(data)=>{
                     if(data.msg=='success'){
-                      window.sessionStorage.setItem('login',JSON.stringify(data.data))
-                      this.$store.commit('loginChange',JSON.parse(window.sessionStorage.getItem('login')));
+                      window.localStorage.setItem('login',JSON.stringify(data.data))
+                      this.$store.commit('loginChange',JSON.parse(window.localStorage.getItem('login')));
                       this.$router.replace('/')
+                    }else{
+                      this.$toast(data.msg)
                     }
                   },
                   error:()=>{
