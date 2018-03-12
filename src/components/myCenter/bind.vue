@@ -86,7 +86,7 @@
                   this.saveTime=60;
                   this.daojishi();
               }else{
-                this.$toast('每天获取的验证码超过上限')
+                this.$toast(data.msg)
               }
             },
             error:()=>{
@@ -135,6 +135,7 @@
               this.$store.commit('userPhoneChange',this.phone);
 
             }else{
+              this.$toast(data.msg)
 
             }
             history.go(-1)

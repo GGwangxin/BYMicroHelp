@@ -111,7 +111,7 @@
         <div class="file">
           <mt-field class="huxing" ref="huxing"  @click.native="selectAddress(1,$event)" state="select" label="户型"   placeholder="请选择您的户型"  v-model="huxingstring"></mt-field>
           <mt-field class="mianji" ref="mianji" label="面积" state="mianji"  placeholder="请输入您的房屋面积" type="number" v-model="shuju.mianji"></mt-field>
-          <mt-field class="price"  ref="price" label="价格"   placeholder="请输入价格,如5000/年"  v-model="shuju.price"></mt-field>
+          <mt-field class="price"  ref="price" label="价格"   placeholder="请输入价格,如5000/年,5000元"  v-model="shuju.price"></mt-field>
           <mt-field class="flooer" ref="flooer" @click.native="selectAddress(2,$event)" state="select" label="楼层"   placeholder="请选择您的楼层"  v-model="flooerstring"></mt-field>
           <mt-field class="zhuangxiu" ref="zhuangxiu"  @click.native="selectAddress(3,$event)" state="select" label="装修"   placeholder="请选择房屋装修"  v-model="zhuangxiustring"></mt-field>
         </div>
@@ -211,7 +211,7 @@
           flooerSlots:[
             {
               flex: 1,
-              values: this.getArr(50,'层'),
+              values: this.getArr(50,'楼'),
               className: 'slot1',
               textAlign: 'center'
             },
@@ -322,7 +322,7 @@
           this.shuju.huxing=this.popupArray.length>0?this.popupArray:['一室','一厅','一卫']
           this.huxingstring=this.ArrToString(this.shuju.huxing)
         }else if(this.popupIndex==2){
-          this.shuju.flooer=this.popupArray.length>0?this.popupArray:['一层']
+          this.shuju.flooer=this.popupArray.length>0?this.popupArray:['一楼']
           this.flooerstring=this.ArrToString(this.shuju.flooer)
         }else{
           this.shuju.zhuangxiu=this.popupArray.length>0?this.popupArray:['毛坯']

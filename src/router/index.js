@@ -29,6 +29,7 @@ import login from '@/components/index/login'
 
 //二手房
 import secondHouseList from  '@/components/secondHouse/secondHouseList'
+import secondHouseTatil from  '@/components/secondHouse/secondHouseTatil'
 
 Vue.use(Router)
 
@@ -129,6 +130,14 @@ export default new Router({
       path:'/secondHouseList',
       name:'secondHouseList',
       component:secondHouseList,
+      meta: {
+        noActive: true // 不需要缓存
+      },
+    },
+    {
+      path:'/secondHouseTatil',
+      name:'secondHouseTatil',
+      component:secondHouseTatil,
       meta: {
         noActive: true // 不需要缓存
       },

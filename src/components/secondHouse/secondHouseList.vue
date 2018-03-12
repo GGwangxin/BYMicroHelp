@@ -14,14 +14,14 @@
       position: relative;
       text-align: center;
       float: left;
-      color: #000000;
+      color: #999;
       font-size: 12px;
       line-height: 1.2rem;
       i{
-        vertical-align:-webkit-baseline-middle;
+        /*vertical-align:-webkit-baseline-middle;*/
         /*ransition: all .3s;*/
         /*transform: rotate(0deg);*/
-        display: inline-block;
+        /*display: inline-block;*/
       }
     }
     li.active{
@@ -109,7 +109,7 @@
               </div>
             </template>
             <template v-if="selList.size==1" v-for="(n, i) in selList.list">
-              <div class="list" :class="{'active':n.active}">{{n.text}}</div>
+              <div class="list" @click="qiehuan(n.active, i)" :class="{'active':n.active}">{{n.text}}</div>
 
             </template>
           </div>
@@ -118,11 +118,26 @@
           </div>
         </div>
       </transition>
-
+      <loadMore
+        ref="loadmore"
+        :bottom-method="loadBottom"
+        :bottom-all-loaded="allLoad"
+        style="position: absolute;top: 2.2rem;bottom: 0;width: 100%"
+      >
+        <div v-if="list.length">
+          <one-house v-for="(n,i) in list" :key="i" :shuju="n"></one-house>
+        </div>
+        <div v-else>
+          <noContent></noContent>
+        </div>
+      </loadMore>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import oneHouse from './oneHouse.vue';
+  import loadMore from '../zujian/loadMore.vue';
+  import noContent from '../zujian/noContent.vue';
   export default {
     name: '',
     props: {},
@@ -140,6 +155,10 @@
           sell:'',
           navIndex:-1,
           selNavshow:false,
+          allLoad:false,
+          list:[],
+          page:1,
+          page_size:8
         }
     },
     computed: {
@@ -174,7 +193,7 @@
                   active:this.sell==1?true:false
                 },
                 {
-                  text: this.typeArr[this.type-1]+this.sellArr[0],
+                  text: this.typeArr[this.type-1]+this.sellArr[1],
                   active:this.sell==2?true:false
                 }
               ]
@@ -191,10 +210,12 @@
             ]
           }
         }
+      },
 
-      }
     },
-    components: {},
+    components: {
+      loadMore,noContent,oneHouse
+    },
     watch: {},
     methods: {
       back(){
@@ -207,6 +228,67 @@
             this.selNavshow=true
           }
           this.navIndex=i
+      },
+      loadBottom(){
+        this.$indicator.open()
+        ajaxGet({
+          data:{
+            size:this.page_size,
+            type:this.getType(),
+          },
+          url:'splist/',
+          success:(data)=>{
+              if(data.msg=='success'){
+                this.list=data.data;
+                this.$nextTick(()=>{
+                  this.$refs.loadmore.onBottomLoaded()
+                  if(data.data.length<this.page_size){
+                    this.allLoad=true
+                  }else{
+                    this.allLoad=false
+                  }
+                })
+                this.page++;
+              }else{
+                this.$refs.loadmore.onBottomLoaded();
+                this.allLoad=true
+              }
+              this.$indicator.close()
+          },
+          error:()=>{
+            this.$indicator.close()
+            this.$toast('网络异常');
+          }
+        })
+      },
+      qiehuan(active, i){
+          if(active){
+              return
+          }else{
+            this.sell=(i+1);
+            console.log(this.sell)
+            console.log('aaaaa')
+            window.localStorage.setItem('type'+this.type,this.sell);
+            this.page=1;
+            this.list=[];
+            this.loadBottom();
+            this.selNavshow=false
+          }
+      },
+      getType(){
+          if(this.type==1){
+            if(this.sell==1){
+                return '1'
+            }else{
+                return '2'
+            }
+          }else{
+            if(this.sell==1){
+              return '3'
+            }else{
+              return '4'
+            }
+          }
       }
     },
     beforeCreate() {},

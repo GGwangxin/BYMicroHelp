@@ -81,7 +81,7 @@ router.afterEach(route => {
   Vue.prototype.$nowRouter=route.fullPath;
 })
 require('./js/index');
-
+require('./filter/index');
 window.vueshili=new Vue({
   el: '#app',
   router,

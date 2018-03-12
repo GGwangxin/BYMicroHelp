@@ -53,9 +53,11 @@
           <div class="header_name">{{login.nickname}}</div>
           <canvasLine ></canvasLine>
         </div>
-      <mt-cell title="房屋出租" to="editRent" value="" class="send_rent"></mt-cell>
-      <mt-cell title="房屋出售" to="movieList" class="send_sold"></mt-cell>
-      <mt-cell title="发布记录" to="movieList" value="" class="recode"></mt-cell>
+      <mt-cell title="发布" to="editIndex" is-link value="" class="send_rent"></mt-cell>
+      <mt-cell title="发布记录"  is-link value="" class="recode"></mt-cell>
+
+      <mt-cell title="绑定手机" to="bind" is-link value="" class="recode" v-if="!userPhone"></mt-cell>
+      <mt-cell title="已绑定手机"  :value="userPhone" class="recode" v-if="phoneshow"></mt-cell>
     </div>
 </template>
 
@@ -72,6 +74,15 @@
     computed: {
         login(){
           return this.$store.state.login
+        },
+        userPhone(){
+          return this.$store.state.userPhone
+        },
+        isphone(){
+              return /^1[34578]\d{9}$/.test(this.userPhone())
+        },
+        phoneshow(){
+            return this.userPhone.replace('\d{3}*\d{3}','****')
         }
     },
     components: {

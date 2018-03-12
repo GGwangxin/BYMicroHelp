@@ -30,7 +30,17 @@
                     if(data.msg=='success'){
                       window.localStorage.setItem('login',JSON.stringify(data.data))
                       this.$store.commit('loginChange',JSON.parse(window.localStorage.getItem('login')));
-                      this.$router.replace('/')
+
+                      ajaxPost({
+                        url: 'wxuser/',
+                        data: data.data,
+                        success: (data) => {
+                          this.$router.replace('/')
+                        },
+                        error: () => {
+                          this.$router.replace('/')
+                        }
+                      })
                     }else{
                       this.$toast(data.msg)
                     }
